@@ -1,0 +1,78 @@
+/* .alice-carousel > div {
+  position: relative;
+} */
+
+.alice-carousel__prev-btn,
+.alice-carousel__next-btn {
+  position: absolute;
+  cursor: pointer;
+  width: 0 !important;
+  padding: 0 !important;
+  top: 0;
+  height: 100%;
+}
+
+.alice-carousel__prev-btn-wrapper {
+  left: 0;
+}
+.alice-carousel__next-btn-wrapper {
+  right: 0;
+}
+
+/* promotions css */
+.promotions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 1240px;
+  height: 274px;
+}
+
+.hot-deals {
+  width: 755px;
+  height: 274px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+.hot-deals-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px 16px 8px;
+}
+.hot-deal-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.header-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+.time-expired {
+  color: gray;
+  font-size: 15px;
+  font-weight: bold;
+}
+.header-left .time-expired span {
+  background-color: #ff424e;
+  border-radius: 4px;
+  padding: 4px 4px;
+  margin: 0 3px;
+  color: #fff;
+}
+.header-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+.header-right a {
+  font-size: 16px;
+  color: #0b74e5;
+  font-weight: 100;
+}

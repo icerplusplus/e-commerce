@@ -1,0 +1,22 @@
+# client folder
+client/.vscode
+client/dist
+client/node_modules
+client/yarn-error.log
+client/yarn.lock
+
+# server folder
+server-tmp
+
+
+
+server/node_modules
+server/.env.local
+server/.umirc.local.ts
+server/config/config.local.ts
+server/src/.umi
+server/src/.umi-production
+server/src/.umi-test
+server/dist
+server/.swc
+server/yarn.lock

@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  list-style: none;
+  overflow: hidden;
+  box-sizing: border-box;
+}
