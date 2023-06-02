@@ -9,7 +9,7 @@ services:
       - 9999:9999
     environment:
       - NODE_ENV=development
-      - SERVER_HOST=localhost
+      - SERVER_HOST=host.docker.internal
       - SERVER_PORT=9999
       - JWT_SECRET=JWT_SECRETS
 
