@@ -7,15 +7,12 @@ client/yarn.lock
 
 # server folder
 server/node_modules
+server/.env
 server/.env.local
-server/.umirc.local.ts
-server/config/config.local.ts
-server/src/.umi
-server/src/.umi-production
-server/src/.umi-test
 server/dist
-server/.swc
+server/build
 server/yarn.lock
+server/.vsocde
 
 server_view_engine
 server_view_engine/node_modules
@@ -33,3 +30,8 @@ server_view_engine/npm-debug.log
 server_view_engine/package-lock.json
 server_view_engine/yarn-error.log
 server_view_engine/yarn.lock
+
+
+.vscode
+.dockerignore
+.gitignore
