@@ -4,9 +4,11 @@ ENV NODE_ENV=production
 
 WORKDIR /e-commerce/server
 
+RUN npm install -g yarn
+
 COPY package.json .
 
-RUN npm install -g yarn
+
 RUN yarn install
 RUN npm install -g @babel/core @babel/cli
 RUN npm install -g nodemon
