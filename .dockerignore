@@ -1,2 +1,8 @@
 client
-finefoods-antd
+
+server/.vscode
+
+
+.dockerignore
+.gitignore
+docker-compose.yml
