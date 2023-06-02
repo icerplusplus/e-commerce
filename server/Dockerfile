@@ -6,9 +6,10 @@ WORKDIR /e-commerce/server
 
 COPY package.json .
 
-RUN npm install -g @babel/core @babel/cli
 RUN npm install -g nodemon
+RUN npm install -g @babel/core @babel/cli
 
 COPY . .
 
+RUN npm run build-src
 CMD ["npm", "run", "build"]
