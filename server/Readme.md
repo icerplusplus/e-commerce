@@ -18,3 +18,6 @@ CHECK MYSQL HOST IN DOCKER CONTAINER:
 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container-name | container-id>
 
 npx sequelize-cli db:seed:all
+
+OPEN TERMINAL IN DB CONTAINER:
+docker exec -it my-data_name bash
