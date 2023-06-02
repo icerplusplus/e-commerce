@@ -1,0 +1,26 @@
+.btn {
+  padding: 0.5rem 0.7rem;
+  margin: 0.5rem 0;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  border-left: solid #c45a5a 3px;
+  border-bottom: solid #c45a5a 3px;
+  font-family: var(--roboto-font);
+  font-size: 14px;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn-icon {
+  font-size: 14px;
+  margin-right: 0.25rem;
+}
+
+.btn:hover {
+  border: none;
+}
+
+.primary {
+  background-color: var(--color-red);
+}

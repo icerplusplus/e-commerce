@@ -1,63 +1,64 @@
-import axios from "axios";
-import jwt_decode from "jwt-decode";
+import axios, {AxiosResponse} from 'axios';
+import {userApi} from './user.api';
+import {Cookies} from '../utils/helpers';
 
-import { userApi } from "./userApi";
-import { loginFulfilled } from "../app/reducer";
-const localApi = "http://localhost:5000/api";
-const herokuApi = "https://agnes-shop-api.herokuapp.com/api";
-const onrenderApi = "https://agnes-shop-api.onrender.com/api";
+const localApi = 'http://localhost:9999/api';
+const herokuApi = 'https://agnes-shop-api.herokuapp.com/api';
+const onrenderApi = 'https://agnes-shop-api.onrender.com/api';
+
+interface IResponseInterceptor {
+  refresh_token: string;
+  access_token: string;
+  exp: number;
+}
 
 let axiosClient = axios.create({
-  baseURL: onrenderApi,
+  baseURL: localApi,
   headers: {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    // "Access-Control-Allow-Methods":
-    //   "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+    'Access-Control-Allow-Headers':
+      'X-Requested-With, content-type, Authorization',
   },
-  withCredentials: true,
 });
 
 // Interceptors
+
 // Add a request interceptor
-
-export const axiosRequestInterceptor = async (payload, dispatch) => {
-  await axiosClient.interceptors.request.use(
-    async (config) => {
-      console.log("this is a axiosRequestInterceptor ");
-      const user = payload;
-
-      const decoded = jwt_decode(user?.info?.accessToken);
-
-      if (decoded?.exp * 1000 < new Date().getTime()) {
-        console.log("token exprired");
-        // CALL REQUEST TOKEN
-        const res = await userApi.refreshToken();
-        console.log("refreshToken: ", res);
-        const requestUser = {
-          ...user?.info,
-          accessToken: res.accessToken,
-        };
-        // CALL LOGIN FULFILLED TO UPDATE INFO OF USER IN STORE
-        dispatch(loginFulfilled(requestUser));
-
-        // SET TOKEN TO HEADERS
-        config.headers["token"] = requestUser.accessToken;
-      }
-      return config;
-    },
-    (err) => {
-      return Promise.reject(err);
-    }
-  );
-  return axiosClient;
-};
 
 // Add a response interceptor
 axiosClient.interceptors.response.use(
-  function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
+  async function (response) {
+    const config = response.config;
+    if (
+      (config.url && config.url?.indexOf('/auths/refresh-token') >= 0) ||
+      !config.headers.token
+    ) {
+      return response.data;
+    }
+    const {status, message} = response.data;
+    if (status && status === 401) {
+      if (message.toString().toLowerCase() === 'token expired!') {
+        // TODO: get refresh token from cookie
+        const token = Cookies.getCookie('refresh_token');
+
+        // TODO: refresh token from server
+        const res = await userApi.refreshToken(token);
+        const {refresh_token, access_token, exp} = res.data;
+        if (access_token) {
+          // TODO: replace access_token to header
+          config.headers['token'] = access_token;
+
+          // TODO: save access/refresh token to cookie
+          Cookies.setCookie('access_token', access_token, exp);
+          Cookies.setCookie('refresh_token', refresh_token, exp);
+
+          return axiosClient(config);
+        }
+      }
+    }
+
     return response.data;
   },
   function (error) {
@@ -65,6 +66,7 @@ axiosClient.interceptors.response.use(
     // Do something with response error
 
     return Promise.reject(error);
-  }
+  },
 );
+
 export default axiosClient;

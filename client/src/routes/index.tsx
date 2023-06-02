@@ -1,25 +1,23 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import { Home } from "../pages";
+import {Cart, Category, Detail, Home} from '../pages';
+import {IRoute} from '../types';
 
-function Router() {
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      {/* <Route
-          path='/product/:id'
-          element={<Detail />}
-        /> */}
-      {/* <Route
-          path='/categories/:id'
-          element={<Category />}
-        />
-        <Route
-          path='/your-cart/'
-          element={<Cart />}
-        /> */}
-    </Routes>
-  );
-}
+export const publicRoutes: IRoute[] = [
+  {
+    path: '/',
+    element: Home,
+  },
+  {
+    path: '/product/detail/:id',
+    element: Detail,
+  },
+  {
+    path: '/cart/',
+    element: Cart,
+  },
+  {
+    path: '/category/:id',
+    element: Category,
+  },
+];
 
-export default Router;
+export const privateRoutes: IRoute[] = [];

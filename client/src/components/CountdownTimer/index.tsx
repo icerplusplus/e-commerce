@@ -1,5 +1,5 @@
-import React from "react";
-import { useCountdown } from "../../hooks/useCountdown";
+import React from 'react';
+import {useCountdown} from '../../hooks/useCountdown';
 
 const ExpiredNotice = () => {
   return (
@@ -10,7 +10,7 @@ const ExpiredNotice = () => {
   );
 };
 
-const ShowCounter = ({ days, hours, minutes, seconds }) => {
+const ShowCounter = ({days, hours, minutes, seconds}: any) => {
   return (
     <div className="text-[gray] text-[15px] font-bold flex flex-row justify-center items-center">
       <span className="bg-[#FF424E] rounded p-[4px] mx-[3px] text-white">
@@ -28,7 +28,7 @@ const ShowCounter = ({ days, hours, minutes, seconds }) => {
   );
 };
 
-const CountdownTimer = ({ targetDate }) => {
+const CountdownTimer: React.FC<any> = ({targetDate}) => {
   const [days, hours, minutes, seconds] = useCountdown(targetDate);
 
   if (days + hours + minutes + seconds <= 0) {

@@ -2,8 +2,121 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  --color-red: #ff424e;
+  --color-blue: #049afd;
+  --roboto-font: Roboto, Helvetica, Arial, sans-serif;
+}
+
+html {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: black;
+  font-family: var(--roboto-font);
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
 body {
   list-style: none;
-  overflow: hidden;
+  /* overflow: hidden; */
   box-sizing: border-box;
+  background-color: #f5f5fa;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #242424;
+}
+
+.header {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.section {
+  padding: 1rem;
+}
+
+.truncates {
+  width: 175px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.star {
+  color: #f7c600;
+}
+
+.list {
+  display: flex;
+  flex-direction: col;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.ant-segmented {
+  background-color: transparent !important;
+}
+.ant-segmented .ant-segmented-item {
+  border-radius: 0 !important;
+}
+
+.ant-segmented-group {
+  border-radius: 0 !important;
+  background-color: #fff !important;
+  border: none !important;
+}
+
+.ant-segmented-item {
+  transition: #1a94ff 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+  border-radius: 0 !important;
+  border: none !important;
+}
+.ant-segmented-item-selected {
+  background-color: #1a94ff !important;
+  color: white !important;
+  border-radius: 0 !important;
+}
+
+.ant-segmented-thumb {
+  background-color: #1a94ff !important;
+}
+
+@keyframes scaler {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

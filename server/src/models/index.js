@@ -1,0 +1,55 @@
+import sequelizeConfig from "../../sequelize.config";
+import fs from "fs";
+import path from "path";
+import Sequelize from "sequelize";
+import dotenv from "dotenv";
+
+import * as ModelInstance from "./files";
+dotenv.config();
+
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || "development";
+const config = sequelizeConfig[env];
+const db = {};
+
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+  );
+}
+
+fs.readdirSync(__dirname)
+  .filter((file) => {
+    return (
+      file !== "files.js" &&
+      file.indexOf(".") !== 0 &&
+      file !== basename &&
+      file.slice(-3) === ".js" &&
+      file.indexOf(".test.js") === -1
+    );
+  })
+  .forEach((file, idx) => {
+    const funcName = file.split(".")[0].toString();
+    const model = ModelInstance.modelFunc[idx][funcName](
+      sequelize,
+      Sequelize.DataTypes
+    );
+    db[model.name] = model;
+  });
+
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+export { db };

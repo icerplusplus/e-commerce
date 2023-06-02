@@ -1,0 +1,7 @@
+.modal-custom {
+  min-width: 85vh !important;
+  overflow-x: hidden;
+}
+.modal-custom > img {
+  text-align: center;
+}

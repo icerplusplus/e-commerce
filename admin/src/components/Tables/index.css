@@ -1,0 +1,20 @@
+.ant-table-row > .ant-table-cell {
+  max-width: 150px !important;
+}
+.ant-table-cell .widthmore {
+  max-width: 400px !important;
+}
+.content-center {
+  width: 100% !important;
+  margin-left: 1rem;
+  /* text-align: center; */
+}
+
+.cursor:hover {
+  cursor: pointer;
+}
+
+.img {
+  width: 100%;
+  text-align: center;
+}

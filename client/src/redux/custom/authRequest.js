@@ -1,125 +1,117 @@
-import userApi from "../../api/userApi";
-import {
-  loginFulfilled,
-  loginPending,
-  loginRejected,
-  logoutFulfilled,
-  registerFulfilled,
-  registerPending,
-  registerRejected,
-} from "../userSlice";
-import { successToast } from "../../utils/successToast";
-import { errorToast } from "../../utils/errorToast";
+// import userApi from "../../api/userApi";
 
-export const registerAction = async (
-  payload,
-  dispatch,
-  callback,
-) => {
-  dispatch(registerPending());
-  try {
-    const newUser = await userApi.register(
-      payload,
-    );
+// import { successToast } from "../../utils/successToast";
+// import { errorToast } from "../../utils/errorToast";
 
-    // save data to local storage
-    localStorage.setItem(
-      "USER_INFO",
-      JSON.stringify(newUser),
-    );
-    await dispatch(registerFulfilled(newUser));
-    successToast({
-      title:
-        "Account has been registered. Please log in here !",
-    });
+// export const registerAction = async (
+//   payload,
+//   dispatch,
+//   callback,
+// ) => {
+//   dispatch(registerPending());
+//   try {
+//     const newUser = await userApi.register(
+//       payload,
+//     );
 
-    callback && callback();
+//     // save data to local storage
+//     localStorage.setItem(
+//       "USER_INFO",
+//       JSON.stringify(newUser),
+//     );
+//     await dispatch(registerFulfilled(newUser));
+//     successToast({
+//       title:
+//         "Account has been registered. Please log in here !",
+//     });
 
-    return newUser;
-  } catch (error) {
-    dispatch(registerRejected());
+//     callback && callback();
 
-    // SHOW TOASTIFY
-    errorToast({
-      title:
-        error.response.data.message ||
-        "Failed to register.",
-    });
+//     return newUser;
+//   } catch (error) {
+//     dispatch(registerRejected());
 
-    console.log(error);
-  }
-};
-export const loginAction = async (
-  payload,
-  dispatch,
-  callback,
-) => {
-  dispatch(loginPending());
-  try {
-    const response = await userApi.login(payload);
+//     // SHOW TOASTIFY
+//     errorToast({
+//       title:
+//         error.response.data.message ||
+//         "Failed to register.",
+//     });
 
-    const { accessToken, ...info } = response;
-    console.log("typeof info: ", typeof info);
+//     console.log(error);
+//   }
+// };
+// export const loginAction = async (
+//   payload,
+//   dispatch,
+//   callback,
+// ) => {
+//   dispatch(loginPending());
+//   try {
+//     const response = await userApi.login(payload);
 
-    // SAVE USER INFO TO LOCAL STORAGE
-    localStorage.setItem(
-      "USER_INFO",
-      JSON.stringify(response),
-    );
+//     const { accessToken, ...info } = response;
+//     console.log("typeof info: ", typeof info);
 
-    // CALL loginFulfilled function to save data to user store
-    await dispatch(loginFulfilled(response));
+//     // SAVE USER INFO TO LOCAL STORAGE
+//     localStorage.setItem(
+//       "USER_INFO",
+//       JSON.stringify(response),
+//     );
 
-    // CLOSE LOGIN POPUP
-    callback && callback();
+//     // CALL loginFulfilled function to save data to user store
+//     await dispatch(loginFulfilled(response));
 
-    // SHOW TOASTIFY
-    successToast({ title: "Login Successful" });
+//     // CLOSE LOGIN POPUP
+//     callback && callback();
 
-    return response;
-  } catch (error) {
-    dispatch(loginRejected());
+//     // SHOW TOASTIFY
+//     successToast({ title: "Login Successful" });
 
-    // SHOW TOASTIFY
-    errorToast({
-      title:
-        error.response.data.message ||
-        "Username or password invalid!",
-    });
+//     return response;
+//   } catch (error) {
+//     dispatch(loginRejected());
 
-    console.log("login error: ", error);
-  }
-};
-export const logoutAction = async (
-  payload,
-  dispatch,
-  callback,
-  interceptor,
-) => {
-  try {
-    await userApi.logout(payload, interceptor);
+//     // SHOW TOASTIFY
+//     errorToast({
+//       title:
+//         error.response.data.message ||
+//         "Username or password invalid!",
+//     });
 
-    // REMOVE USER INFO FROM LOCAL STORAGE
-    localStorage.removeItem("USER_INFO");
+//     console.log("login error: ", error);
+//   }
+// };
+// export const logoutAction = async (
+//   payload,
+//   dispatch,
+//   callback,
+//   interceptor,
+// ) => {
+//   try {
+//     await userApi.logout(payload, interceptor);
 
-    // UPDATE STATE IN STORE
-    await dispatch(logoutFulfilled());
+//     // REMOVE USER INFO FROM LOCAL STORAGE
+//     localStorage.removeItem("USER_INFO");
 
-    // CLOSE USER OPTIONS
-    callback && callback();
+//     // UPDATE STATE IN STORE
+//     await dispatch(logoutFulfilled());
 
-    // SHOW TOASTIFY
-    successToast({ title: "Logout successful" });
-  } catch (error) {
-    // SHOW TOASTIFY
-    errorToast({
-      title:
-        error?.response?.data.message ||
-        "Logout failed!",
-    });
-    console.log(
-      "error in logout action: ",
-      error,
-    );
-  }
-};
+//     // CLOSE USER OPTIONS
+//     callback && callback();
+
+//     // SHOW TOASTIFY
+//     successToast({ title: "Logout successful" });
+//   } catch (error) {
+//     // SHOW TOASTIFY
+//     errorToast({
+//       title:
+//         error?.response?.data.message ||
+//         "Logout failed!",
+//     });
+//     console.log(
+//       "error in logout action: ",
+//       error,
+//     );
+//   }
+// };

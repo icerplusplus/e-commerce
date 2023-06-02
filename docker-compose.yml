@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  api:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 9999:9999
+    environment:
+      - NODE_ENV=development
+      - SERVER_HOST=localhost
+      - SERVER_PORT=9999
+      - JWT_SECRET=JWT_SECRETS
+
+      - DATABASE_HOST=host.docker.internal
+      - DATABASE_NAME=e-commerce
+      - DATABASE_PORT=3307
+      - DIALECT=mysql
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=123456
+  mysql:
+    image: mysql:8.0.33
+    restart: always
+    environment:
+      - MYSQL_DATABASE=e-commerce
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      - e-commerce:/var/lib/mysql
+    ports:
+      - 3307:3306
+    # expose:
+    #   - 3306
+volumes:
+  e-commerce:

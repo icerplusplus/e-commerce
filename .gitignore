@@ -6,10 +6,6 @@ client/yarn-error.log
 client/yarn.lock
 
 # server folder
-server-tmp
-
-
-
 server/node_modules
 server/.env.local
 server/.umirc.local.ts
@@ -20,3 +16,20 @@ server/src/.umi-test
 server/dist
 server/.swc
 server/yarn.lock
+
+server_view_engine
+server_view_engine/node_modules
+server_view_engine/.idea
+server_view_engine/.DS_Store
+server_view_engine/.AppleDouble
+server_view_engine/.LSOverride
+server_view_engine/.umi
+server_view_engine/.umi-production
+server_view_engine/src/locales/_build
+server_view_engine/src/locales/**/*.js
+server_view_engine/coverage
+server_view_engine/dist
+server_view_engine/npm-debug.log
+server_view_engine/package-lock.json
+server_view_engine/yarn-error.log
+server_view_engine/yarn.lock

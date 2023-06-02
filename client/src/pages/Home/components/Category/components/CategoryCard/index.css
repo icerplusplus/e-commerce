@@ -1,0 +1,16 @@
+.cate:hover {
+  color: var(--color-blue);
+
+}
+
+.cate__thumb {
+  min-width: 3rem;
+  min-height: 3rem;
+  width: 3rem;
+  height: 3rem;
+}
+
+.cate__thumb:hover {
+    animation: scaler 2s infinite
+}
+

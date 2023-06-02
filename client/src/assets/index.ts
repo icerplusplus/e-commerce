@@ -1,0 +1,9 @@
+export {default as BoCT2_Icon} from './bo-cong-thuong-2.png';
+export {default as BoCT_SVG} from './bo-cong-thuong.svg';
+export {default as Momo_Icon} from './momo-icon.png';
+export {default as Paypal_Icon} from './paypal-icon.png';
+export {default as Visa_Icon} from './visa-icon.png';
+export {default as ViettelMoney_Icon} from './viettel-money.png';
+export {default as Vnpay_Icon} from './vnpay-icon.png';
+export {default as Zalopay_Icon} from './zalopay-icon.png';
+export {default as NewBadge} from './new-badge.gif';

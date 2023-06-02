@@ -1,0 +1,16 @@
+.tb__header-title {
+  font-size: 20px;
+  color: #333333;
+}
+.tb__row {
+  font-size: 13px;
+  margin: 0.25rem;
+  border-bottom: solid 1px #fff;
+}
+.tb__row-title {
+  max-width: 250px;
+  color: #2b2a2a;
+  font-weight: 600;
+  padding: 10px 15px;
+  background-color: #efefef;
+}

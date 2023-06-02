@@ -1,0 +1,12 @@
+.form__item__full,
+.ant-form-item-row {
+  width: 100%;
+}
+
+.ant-col-xs-24,
+.ant-col-sm-16 {
+  width: 100% !important;
+}
+.ant-upload-wrapper {
+  width: 100% !important;
+}

@@ -1,15 +1,18 @@
 import React from "react";
-import Slider from "../../components/Slider";
-import Promotion from "../../components/Promotion";
+import {Slider, Promotion, Container} from "@/components";
+import Category from "./components/Category";
+import Collect from "./components/Collect";
+import {withHeaderAndFooter} from "@/hoc";
 
-export function Home() {
+const Home: React.FC = () => {
   return (
-    <main className="m-auto my-2 w-full lg:w-container space-y-2">
-      {/* slider */}
+    <Container>
       <Slider />
-
-      {/* Promotion */}
-      <Promotion />
-    </main>
+      {/* <Promotion /> */}
+      <Category />
+      <Collect />
+    </Container>
   );
-}
+};
+
+export default withHeaderAndFooter(Home);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 import {
   AiOutlineAppstore,
   AiOutlineMenu,
@@ -9,78 +9,71 @@ import {
   IoMdArrowDropdown,
   RiBillLine,
   VscAccount,
-} from "../../libs/icon";
-import Badge from "../Badge";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { axiosRequestInterceptor } from "../../api";
-import { Dropdown } from "antd";
-import type { MenuProps } from "antd";
-import { logoutAction } from "../../libs";
-import LeftDrawer from "./LeftDrawer";
+} from '../../libs/icon';
+import Badge from '../Badge';
+import {Dropdown} from 'antd';
+import LeftDrawer from './LeftDrawer';
+import {
+  useAppDispatch,
+  useAppNavigate,
+  useAppSelector,
+  useAuthenticate,
+} from '../../hooks';
+import {selectDataInCart, selectUserInfo} from '@/stores/reducer';
 
 type Props = {
   togglePopup: () => void;
 };
+export interface MenuOptionProps {
+  key: string;
+  label: React.ReactNode;
+  icon: React.ReactNode;
+}
 
-function Header({ togglePopup }: Props) {
+const Header: React.FC<Props> = ({togglePopup}) => {
   const [showOptions, setShowOptions] = useState(false);
-  const [menuOptions, setMenuOptions] = useState<MenuProps["items"]>([]);
-  const userInfo = useSelector((state) => state?.user || null);
-  const cart = useSelector((state) => state?.cart);
-  const accessToken = userInfo?.info?.accessToken;
+  const [menuOptions, setMenuOptions] = useState<MenuOptionProps[]>([]);
+
+  // use custom hook
+  const {logoutHandler} = useAuthenticate();
 
   // drawer
   const [openDrawer, setOpenDrawer] = useState(false);
 
   // navigation
-  const navigation = useNavigate();
+  const {changeToPage} = useAppNavigate();
 
   // store
-  const dispatch = useDispatch();
+  // const dispatch = useAppDispatch();
+  const cart = useAppSelector(selectDataInCart);
+  const userInfo = useAppSelector(selectUserInfo);
 
   const toggleShowOptions = () => {
     setShowOptions(!showOptions);
   };
 
-  const handleLogout = async () => {
-    const interceptor = await axiosRequestInterceptor(userInfo, dispatch);
-    try {
-      await logoutAction(
-        {
-          headers: {
-            token: `Bearer ${accessToken}`,
-          },
-        },
-        dispatch,
-        toggleShowOptions,
-        interceptor
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const handleLogout = async () => await logoutHandler();
 
   useEffect(() => {
-    if (userInfo.info?.username)
+    if (userInfo.data?.email)
       setMenuOptions([
         {
-          key: "orders",
+          key: 'orders',
           label: <p className="w-full">Đơn hàng của tôi</p>,
           icon: <RiBillLine />,
         },
         {
-          key: "account",
+          key: 'account',
           label: <p className="w-full">Tài khoản của tôi</p>,
           icon: <VscAccount />,
         },
         {
-          key: "rates",
+          key: 'rates',
           label: <p className="w-full">Đánh giá sản phẩm</p>,
           icon: <AiOutlineStar />,
         },
         {
-          key: "logout",
+          key: 'logout',
           label: (
             <p className="w-full" onClick={handleLogout}>
               Đăng xuất
@@ -89,6 +82,7 @@ function Header({ togglePopup }: Props) {
           icon: <CiLogin />,
         },
       ]);
+    else setMenuOptions([]);
   }, [userInfo]);
 
   return (
@@ -117,12 +111,15 @@ function Header({ togglePopup }: Props) {
                 </div>
               </div>
               <div className="flex lg:hidden justify-center items-center text-white">
-                <AiOutlineMenu size={24} onClick={() => setOpenDrawer(true)} />
+                <AiOutlineMenu
+                  size={24}
+                  onClick={() => setOpenDrawer(!openDrawer)}
+                />
               </div>
               <LeftDrawer
                 menuOptions={menuOptions}
                 openDrawer={openDrawer}
-                setOpenDrawer={setOpenDrawer}
+                setOpenDrawer={(status) => setOpenDrawer(status)}
               />
             </div>
             <div className="flex flex-col lg:grow-[3] w-full">
@@ -171,7 +168,7 @@ function Header({ togglePopup }: Props) {
                       </div>
                     </div>
                   </div>
-                  <button className="hidden text-white cursor-pointer border-none outline-none bg-blue-500 md:flex justify-center items-center h-10 min-w-[120px] py-2.5 px-[15px] text-[13px] font-bold rounded-sm drop-shadow-md ">
+                  <button className="hidden text-white cursor-pointer border-none outline-none bg-[#0D5CB6] md:flex justify-center items-center h-10 min-w-[120px] py-2.5 px-[15px] text-[13px] font-bold rounded-sm drop-shadow-md ">
                     <BiSearchAlt size={25} className="search-icon" />
                     <span>Tìm kiếm</span>
                   </button>
@@ -180,20 +177,21 @@ function Header({ togglePopup }: Props) {
                   <div
                     className="flex flex-col justify-start cursor-pointer px-2.5 relative h-full"
                     onClick={() => {
-                      !userInfo.info ? togglePopup() : toggleShowOptions();
+                      !userInfo.data ? togglePopup() : toggleShowOptions();
                     }}
                   >
                     <Dropdown
-                      menu={{ items: menuOptions }}
+                      menu={{items: menuOptions}}
                       placement="bottomRight"
                       arrow
+                      disabled={!userInfo.data}
                       className="text-[1rem] "
                     >
                       <div className="flex flex-row h-1/2 w-full">
-                        <BiUser color={"#fff"} size={35} />
+                        <BiUser color={'#fff'} size={35} />
                         <span className="flex flex-col items-start py-0.75 px-0.5 text-white h-full">
                           {/* <span className="text-[11px] ">Đăng nhập / Đăng ký</span> */}
-                          {!userInfo.info ? (
+                          {!userInfo.data ? (
                             <span className="text-[11px]">
                               Đăng nhập / Đăng ký
                             </span>
@@ -202,9 +200,7 @@ function Header({ togglePopup }: Props) {
                           )}
 
                           <p className="text-[13px] flex justify-center items-center">
-                            {userInfo.info
-                              ? userInfo.info?.username
-                              : "Tài khoản"}
+                            {userInfo.data ? userInfo.data?.email : 'Tài khoản'}
                             <IoMdArrowDropdown size={16} />
                           </p>
                         </span>
@@ -213,11 +209,9 @@ function Header({ togglePopup }: Props) {
                   </div>
                   <div
                     className="relative flex justify-center cursor-pointer h-1/2"
-                    onClick={() => {
-                      // navigation("/your-cart");
-                    }}
+                    onClick={() => changeToPage('/cart')}
                   >
-                    <Badge />
+                    <Badge value={cart?.size} />
 
                     <span className="text-white text-xs font-extralight ml-[5px] mb-[3px]  flex items-end">
                       Giỏ hàng
@@ -231,6 +225,6 @@ function Header({ togglePopup }: Props) {
       </header>
     </>
   );
-}
+};
 
 export default Header;
