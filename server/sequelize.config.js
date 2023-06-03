@@ -5,7 +5,7 @@ module.exports = {
     "username": process.env.DATABASE_USERNAME,
     "password": process.env.DATABASE_PASSWORD,
     "database": process.env.DATABASE_NAME,
-    "host": process.env.DATABASE_HOST || '172.30.0.3',
+    "host": process.env.DATABASE_HOST,
     "port": process.env.DATABASE_PORT,
     "dialect": process.env.DIALECT
   },
@@ -13,7 +13,7 @@ module.exports = {
     "username": process.env.DATABASE_USERNAME,
     "password": process.env.DATABASE_PASSWORD,
     "database": process.env.DATABASE_NAME,
-    "host": process.env.DATABASE_HOST || '172.30.0.3',
+    "host": process.env.DATABASE_HOST,
     "port": process.env.DATABASE_PORT,
     "dialect": process.env.DIALECT
   },
@@ -21,7 +21,7 @@ module.exports = {
     "username": process.env.DATABASE_USERNAME,
     "password": process.env.DATABASE_PASSWORD,
     "database": process.env.DATABASE_NAME,
-    "host": process.env.DATABASE_HOST || '172.29.0.3',
+    "host": process.env.DATABASE_HOST,
     "port": process.env.DATABASE_PORT,
     "dialect": process.env.DIALECT
   }

@@ -21,3 +21,20 @@ npx sequelize-cli db:seed:all
 
 OPEN TERMINAL IN DB CONTAINER:
 docker exec -it my-data_name bash
+
+
+My final personal project in university, about: 
+1. Frontend: ReactJS
+2. Backend: ExpressJS
+- This backend was build with MVC pattern and REST API
+- A lot of features on it:
+  + Authentication/Authorization with JWT - Json web token
+  + Allow get list, create, update, and delete: user, product, category,...
+  + Allow client payment with VnPay, Papal, Stripe, ... when they buy something in this shop
+  + Client can rate and comment under the description
+3. Database: MySQL (using Sequelize-cli to work)
+
+My final personal project in university, about: 
+1. Frontend: ReactJS
+2. Backend: ExpressJS
+3. Database: MySQL (using Sequelize-cli to work)

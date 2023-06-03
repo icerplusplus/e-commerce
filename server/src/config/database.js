@@ -4,26 +4,31 @@ import { Sequelize } from "sequelize";
 dotenv.config();
 
 
-export const db = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_USERNAME, process.env.DATABASE_PASSWORD, {
-  host: process.env.DATABASE_HOST,
-  port: process.env.DATABASE_PORT,
-  pool: {
-    max: 10,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  },
-  logging: false,
-  dialect: process.env.DIALECT,
-  
-});
+function attemptDatabaseConnection() {
+  const sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_USERNAME, process.env.DATABASE_PASSWORD, {
+    host: process.env.DATABASE_HOST,
+    port: process.env.DATABASE_PORT,
+    pool: {
+      max: 100,
+      min: 0,
+      acquire: 1000000,
+      idle: 100000,
+      evict: 2000,
+    },
+    logging: true,
+    dialect: process.env.DIALECT,
+  });
+  return sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connected to the database!');
+    // Start your application logic here
+    return sequelize;
+  })
+  .catch((err) => {
+    console.error('Failed to connect to the database:', err);
+    setTimeout(attemptDatabaseConnection, 2000); // Retry after 2 seconds
+  });
+}
 
-(async () => {
-  try {
-   
-    await db.authenticate();
-    console.log("Connection has been established successfully.");
-  } catch (error) {
-    console.error("Unable to connect to the database:", error);
-  }
-})();
+export const db = attemptDatabaseConnection()

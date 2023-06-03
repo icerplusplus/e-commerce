@@ -1,6 +1,7 @@
 # client folder
 client/.vscode
-client/dist
+# client/dist
+client/redux
 client/node_modules
 client/yarn-error.log
 client/yarn.lock

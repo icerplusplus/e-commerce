@@ -23,7 +23,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-    restart: unless-stopped
+    restart: always
     volumes:
       - ./:/server
     ports:
@@ -44,6 +44,7 @@ services:
       - DATABASE_PASSWORD=123456
     stdin_open: true
     tty: true
+
 networks:
   frontend: 
     name: client-network
